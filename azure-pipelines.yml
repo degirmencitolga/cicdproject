@@ -23,6 +23,13 @@ steps:
     npm run build
   displayName: 'npm install and build'
 
+- task: PowerShell@2
+  displayName: 'Inline Powershell'
+  inputs:
+    TargetType: inline
+    Script: |
+     Compress-Archive -Path "$(Build.BinariesDirectory)\target\debug" -DestinationPath "$(Build.ArtifactStagingDirectory)\MyProject-$(build)-$(Build.BuildId).zip"
+    pwsh: true
 - task: ArchiveFiles@2
   inputs:
     rootFolderOrFile: '$(Build.BinariesDirectory)'
